@@ -79,44 +79,42 @@
     </footer>
 
     <script>
-        document.getElementById("rsvpForm").addEventListener("submit", async function (event) {
-            event.preventDefault();
+       document.getElementById("rsvpForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
 
-            const name = document.querySelector('input[name="name"]').value.trim();
-            const email = document.querySelector('input[name="email"]').value.trim();
+        const name = document.querySelector('input[name="name"]').value.trim();
+        const email = document.querySelector('input[name="email"]').value.trim();
 
-            const responseMessage = document.getElementById("responseMessage");
+        const responseMessage = document.getElementById("responseMessage");
 
-            // Validação básica
-            if (!name || !email) {
-                responseMessage.textContent = "Por favor, preencha todos os campos.";
-                responseMessage.style.color = "red";
-                return;
+        if (!name || !email) {
+            responseMessage.textContent = "Por favor, preencha todos os campos.";
+            responseMessage.style.color = "red";
+            return;
+        }
+
+        try {
+            const response = await fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, email })
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                responseMessage.textContent = result.message || "Confirmação enviada com sucesso!";
+                responseMessage.style.color = "green";
+                document.getElementById("rsvpForm").reset();
+            } else {
+                throw new Error("Erro ao enviar a confirmação.");
             }
-
-            try {
-                // Enviar dados para o Google Apps Script
-                const response = await fetch("https://script.google.com/macros/s/AKfycbyKaXQ6sOwHJefbRFeik47gSzFflRHa9dk_kAxtt1JAINITrkqva_u5T5euFCnblss3NA/exec", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ name, email })
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    responseMessage.textContent = result.message || "Confirmação enviada com sucesso!";
-                    responseMessage.style.color = "green";
-                    document.getElementById("rsvpForm").reset();
-                } else {
-                    throw new Error("Erro ao enviar a confirmação.");
-                }
-            } catch (error) {
-                responseMessage.textContent = "Ocorreu um erro. Por favor, tente novamente.";
-                responseMessage.style.color = "red";
-            }
-        });
-    </script>
+        } catch (error) {
+            responseMessage.textContent = "Ocorreu um erro. Por favor, tente novamente.";
+            responseMessage.style.color = "red";
+        }
+    });
+</script>
 </body>
 </html>
