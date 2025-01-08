@@ -22,23 +22,17 @@
             margin: 0;
             font-size: 3em;
         }
-        nav {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: sticky;
-            top: 0;
-        }
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
         }
         section {
             padding: 20px;
             max-width: 800px;
             margin: auto;
+        }
+        .rsvp {
+            text-align: center;
         }
         .rsvp form {
             display: flex;
@@ -70,14 +64,7 @@
         <p>Estamos felizes em compartilhar este dia especial com você!</p>
     </header>
 
-    <nav>
-        <a href="#intro">Sobre Nós</a>
-        <a href="#evento">O Evento</a>
-        <a href="#local">O Local</a>
-        <a href="#rsvp">RSVP</a>
-    </nav>
-
-    <section id="rsvp" class="rsvp">
+    <section class="rsvp">
         <h2>Confirme Sua Presença</h2>
         <form id="rsvpForm">
             <input type="text" name="name" placeholder="Seu Nome" required>
@@ -95,11 +82,12 @@
         document.getElementById("rsvpForm").addEventListener("submit", async function (event) {
             event.preventDefault();
 
-            const name = document.querySelector('input[name="name"]').value;
-            const email = document.querySelector('input[name="email"]').value;
+            const name = document.querySelector('input[name="name"]').value.trim();
+            const email = document.querySelector('input[name="email"]').value.trim();
 
             const responseMessage = document.getElementById("responseMessage");
 
+            // Validação básica
             if (!name || !email) {
                 responseMessage.textContent = "Por favor, preencha todos os campos.";
                 responseMessage.style.color = "red";
@@ -107,9 +95,12 @@
             }
 
             try {
-                const response = await fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+                // Enviar dados para o Google Apps Script
+                const response = await fetch("https://script.google.com/macros/s/AKfycbyKaXQ6sOwHJefbRFeik47gSzFflRHa9dk_kAxtt1JAINITrkqva_u5T5euFCnblss3NA/exec", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
                     body: JSON.stringify({ name, email })
                 });
 
