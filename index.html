@@ -22,10 +22,6 @@
             margin: 0;
             font-size: 3em;
         }
-        header p {
-            margin: 10px 0 0;
-            font-size: 1.2em;
-        }
         nav {
             background: #333;
             color: white;
@@ -39,26 +35,10 @@
             margin: 0 15px;
             text-decoration: none;
         }
-        nav a:hover {
-            text-decoration: underline;
-        }
         section {
             padding: 20px;
             max-width: 800px;
             margin: auto;
-        }
-        .intro {
-            text-align: center;
-        }
-        .evento, .local {
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        .rsvp {
-            text-align: center;
         }
         .rsvp form {
             display: flex;
@@ -70,6 +50,11 @@
             padding: 10px;
             width: 80%;
             max-width: 400px;
+        }
+        #responseMessage {
+            font-size: 1.1em;
+            margin-top: 15px;
+            font-weight: bold;
         }
         footer {
             background: #333;
@@ -92,23 +77,6 @@
         <a href="#rsvp">RSVP</a>
     </nav>
 
-    <section id="intro" class="intro">
-        <h2>Sobre Nós</h2>
-        <p>Bem-vindo ao nosso site de casamento! Somos [Nome1] e [Nome2], um casal apaixonado pronto para dar o próximo passo. Mal podemos esperar para celebrar este momento especial com vocês!</p>
-    </section>
-
-    <section id="evento" class="evento">
-        <h2>O Evento</h2>
-        <p><strong>Data:</strong> [Data do Casamento]</p>
-        <p><strong>Hora:</strong> [Horário do Casamento]</p>
-    </section>
-
-    <section id="local" class="local">
-        <h2>O Local</h2>
-        <p><strong>Local:</strong> [Endereço do Local]</p>
-        <p>Descrição do local e instruções de como chegar.</p>
-    </section>
-
     <section id="rsvp" class="rsvp">
         <h2>Confirme Sua Presença</h2>
         <form id="rsvpForm">
@@ -116,7 +84,6 @@
             <input type="email" name="email" placeholder="Seu Email" required>
             <button type="submit">Enviar</button>
         </form>
-
         <div id="responseMessage"></div>
     </section>
 
@@ -128,25 +95,27 @@
         document.getElementById("rsvpForm").addEventListener("submit", async function (event) {
             event.preventDefault();
 
-            // Captura os valores dos campos
             const name = document.querySelector('input[name="name"]').value;
             const email = document.querySelector('input[name="email"]').value;
 
-            // Mensagem de resposta na página
             const responseMessage = document.getElementById("responseMessage");
 
+            if (!name || !email) {
+                responseMessage.textContent = "Por favor, preencha todos os campos.";
+                responseMessage.style.color = "red";
+                return;
+            }
+
             try {
-                // Faz a requisição POST para o Google Apps Script
-                const response = await fetch("https://script.google.com/macros/s/AKfycbyKaXQ6sOwHJefbRFeik47gSzFflRHa9dk_kAxtt1JAINITrkqva_u5T5euFCnblss3NA/exec", {
+                const response = await fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
                     method: "POST",
-                    body: JSON.stringify({ name, email }),
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email })
                 });
 
                 if (response.ok) {
-                    responseMessage.textContent = "Confirmação enviada com sucesso!";
+                    const result = await response.json();
+                    responseMessage.textContent = result.message || "Confirmação enviada com sucesso!";
                     responseMessage.style.color = "green";
                     document.getElementById("rsvpForm").reset();
                 } else {
