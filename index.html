@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Casamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            color: #333;
+        }
+        header {
+            background: #e91e63;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+        }
+        nav {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        section {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .intro {
+            text-align: center;
+        }
+        .evento, .local {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .rsvp {
+            text-align: center;
+        }
+        .rsvp form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .rsvp input, .rsvp button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nosso Casamento</h1>
+        <p>Estamos felizes em compartilhar este dia especial com você!</p>
+    </header>
+
+    <nav>
+        <a href="#intro">Sobre Nós</a>
+        <a href="#evento">O Evento</a>
+        <a href="#local">O Local</a>
+        <a href="#rsvp">RSVP</a>
+    </nav>
+
+    <section id="intro" class="intro">
+        <h2>Sobre Nós</h2>
+        <p>Bem-vindo ao nosso site de casamento! Somos [Nome1] e [Nome2], um casal apaixonado pronto para dar o próximo passo. Mal podemos esperar para celebrar este momento especial com vocês!</p>
+    </section>
+
+    <section id="evento" class="evento">
+        <h2>O Evento</h2>
+        <p><strong>Data:</strong> [Data do Casamento]</p>
+        <p><strong>Hora:</strong> [Horário do Casamento]</p>
+    </section>
+
+    <section id="local" class="local">
+        <h2>O Local</h2>
+        <p><strong>Local:</strong> [Endereço do Local]</p>
+        <p>Descrição do local e instruções de como chegar.</p>
+    </section>
+
+    <section id="rsvp" class="rsvp">
+        <h2>Confirme Sua Presença</h2>
+        <form>
+            <input type="text" placeholder="Seu Nome" required>
+            <input type="email" placeholder="Seu Email" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>Com amor, [Nome1] e [Nome2]</p>
+    </footer>
+</body>
+</html>
